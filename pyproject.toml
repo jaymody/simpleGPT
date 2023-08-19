@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simplegpt"
+version = "0.1.0"
+description = "Simple GPT implementation in PyTorch."
+authors = [{ name = "jaymody", email = "jaykmody@gmail.com" }]
+dependencies = [
+    "torch>=2.0.1",
+    "einops>=0.6.1",
+    "numpy>=1.25.2",
+    "tiktoken>=0.4.0",
+    "tqdm>=4.66.1",
+    "fire>=0.5.0",
+    "setuptools>=68.1.0",
+    # needed to load gpt2 weights
+    "transformers>=4.31.0",
+    # needed for training
+    "toml>=0.10.0",
+    "pydantic>=2.1.1",
+    "lightning>=2.0.7",
+    "tensorboard>=2.14.0",
+    "wandb>=0.15.8",
+]
+readme = "README.md"
+requires-python = ">=3.10,<3.11"
+
+[project.optional-dependencies]
+dev = ["ipykernel>=6.25.1", "matplotlib>=3.7.2"]

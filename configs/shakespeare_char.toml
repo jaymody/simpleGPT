@@ -1,0 +1,23 @@
+include = "base.toml"
+
+output_dir = "./models/tiny_shakespeare_char"
+tokenizer_name = "char"
+
+[model]
+n_vocab = 256
+
+[data]
+train_fpath = "./data/train-char.bin"
+val_fpath = "./data/val-char.bin"
+seq_len = 256
+
+[optimization]
+decay_steps = 5_000 # should be kept same as max_steps
+warmup_steps = 100
+
+[trainer]
+accelerator = "auto"
+max_steps = 5_000
+val_check_interval = 250
+limit_val_batches = 200
+log_every_n_steps = 10

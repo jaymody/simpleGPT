@@ -1,0 +1,54 @@
+seed = 123              # Random number generator seed.
+torch_compile = true    # Use torch jit compilation to make things a bit faster.
+tokenizer_name = "gpt2" # Tokenizer name from tiktoken or "char" for character based tokenizer (should be the same tokenizer used to encode the data you're training on).
+
+# Remove this if you don't want to use weights and biases (instead, tensorboard
+# logs will be written to the output dir).
+[wandb]
+project = "simplegpt"
+
+# Model config for a baby GPT model.
+[model]
+n_vocab = 50_304 # Actual size of gpt2 tokenizer is 50257, but rounding up to the nearest multiple of 128 yields a speedup
+n_ctx = 1024
+n_embd = 384
+n_head = 6
+n_layer = 6
+
+# Data config.
+[data]
+seq_len = 1024
+train_batch_size = 64
+val_batch_size = 64
+num_workers = 8
+
+[checkpointing]
+monitor = "val_loss"
+save_top_k = 1
+mode = "min"
+save_last = true
+
+# Optimization settings. Weight decay is only applied to matrices (i.e. not to
+# biases and layer norm params). We use a cosine decay with warmup learning
+# rate scheduler. That is:
+#
+#   The learning rate starts at start_lr and linearly increases to peak_lr over
+#   warmup_steps steps. Then we decay down to end_lr for decay_steps steps using
+#   a cosine function. After, we just keep a constant learning rate of end_lr.
+#
+# If you want to keep a constant learning rate, the easiest thing to do would be
+# to just set:
+#
+#   start_lr = peak_lr = end_lr   and/or   set decay_steps = warmup_steps = 0
+#
+[optimization]
+start_lr = 0
+peak_lr = 1e-3
+end_lr = 1e-4
+betas = [0.9, 0.95]
+weight_decay = 0.1
+dropout_p = 0.2
+
+[trainer]
+accelerator = "auto"
+gradient_clip_val = 1
