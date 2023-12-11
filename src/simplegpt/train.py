@@ -205,7 +205,7 @@ def main(config_path: str):
 
     model = LightningGPT(config)
     if config.torch_compile:
-        model = torch.compile(model)
+        model.gpt = torch.compile(model.gpt)
 
     callbacks = [
         LearningRateMonitor(logging_interval="step"),

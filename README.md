@@ -111,7 +111,7 @@ $ python -m simplegpt.data --text_file "data/train.txt" --output_file "data/trai
 number of tokens = 1016242
 saving to data/train.bin
 
-$ python -m simplegpt.data text_file "data/val.txt" output_file "data/val-char.bin" tokenizer_name "char"
+$ python -m simplegpt.data --text_file "data/val.txt" --output_file "data/val-char.bin" --tokenizer_name "char"
 100%|██████████████████████████████████████████████████████████████████████████████| 4000/4000 [00:00<00:00, 719403.80it/s]
 number of tokens = 99152
 saving to data/val.bin
